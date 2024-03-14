@@ -7,9 +7,8 @@
     <meta name="description" content="Encontre as últimas tendências da moda na iCloset.">
     <meta name="author" content="Akassio Correia, Icaro e Mariana">
     <title>iCloset - Sua moda, seu estilo!</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body {
             background-color: #fff0f5;
@@ -45,9 +44,9 @@
         }
 
         .card-img-top {
-            height: 200px;
-            object-fit: contain;
-            background-color: #fff;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 0.25rem 0.25rem 0 0;
         }
 
         .price {
@@ -88,42 +87,56 @@
 
     <main>
         <div class="container py-5 text-center">
-            <h1 class="main-heading">Moda atual e estilo único.</h1>
-            <p class="lead">Explore nossa coleção e encontre o estilo que expressa quem você é.</p>
+            <h1 class="main-heading">Descubra a moda em todas as estações.</h1>
+            <p class="lead">Navegue pelas nossas categorias e encontre as peças perfeitas para cada momento do ano.</p>
         </div>
 
         <div class="container my-4">
-            <div class="row">
-                <div class="col-md-4">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <!-- Moda Infantil -->
+                <div class="col">
                     <div class="card">
-                        <img src="/Imagens/vestidorosa1.JPG" class="card-img-top" alt="Vestido Rosa">
+                        <img src="/Imagens/Moda infantil - principal.jpg" class="card-img-top" alt="Moda Infantil">
                         <div class="card-body">
-                            <h5 class="card-title">Vestido Mariana Galvão</h5>
-                            <p class="card-text">Rosa barbie.</p>
-                            <p class="price">R$ 150,00</p>
-                            <a href="pagamento.html?preco=R$150,00" class="btn btn-primary">Comprar</a>
+                            <h5 class="card-title">Moda Infantil</h5>
+                            <p class="card-text">Descubra roupas confortáveis e estilosas para os pequenos.</p>
+                            <a href="#" class="btn btn-primary">Ver Coleção</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <!-- Moda Primavera/Verão -->
+                <div class="col">
                     <div class="card">
-                        <img src="/Imagens/vestidoazul1.jpg" class="card-img-top" alt="Vestido Azul">
+                        <img src="/Imagens/Moda Primavera verão - principal.JPG" class="card-img-top"
+                            alt="Moda Primavera/Verão">
                         <div class="card-body">
-                            <h5 class="card-title">Vestido Azul</h5>
-                            <p class="card-text">Vestido azul mar.</p>
-                            <p class="price">R$ 200,00</p>
-                            <a href="pagamento.html?preco=R$200,00" class="btn btn-primary">Comprar</a>
+                            <h5 class="card-title">Moda Primavera/Verão</h5>
+                            <p class="card-text">Peças frescas e coloridas para aproveitar as estações mais quentes.</p>
+                            <a href="#" class="btn btn-primary">Ver Coleção</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <!-- Moda Outono/Inverno -->
+                <div class="col">
                     <div class="card">
-                        <img src="/Imagens/noiva1.JPG" class="card-img-top" alt="Vestido de Noiva">
+                        <img src="/Imagens/Moda Outono Inverno - principal.JPG" class="card-img-top"
+                            alt="Moda Outono/Inverno">
                         <div class="card-body">
-                            <h5 class="card-title">Vestido de Noiva</h5>
-                            <p class="card-text">Vestido de noiva moderno.</p>
-                            <p class="price">R$ 500,00</p>
-                            <a href="pagamento.html?preco=R$500,00" class="btn btn-primary">Comprar</a>
+                            <h5 class="card-title">Moda Outono/Inverno</h5>
+                            <p class="card-text">Roupas quentes e confortáveis para enfrentar o frio em grande estilo.
+                            </p>
+                            <a href="#" class="btn btn-primary">Ver Coleção</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Moda Praia -->
+                <div class="col">
+                    <div class="card">
+                        <img src="/Imagens/Moda Praia- principal.JPG" class="card-img-top" alt="Moda Praia">
+                        <div class="card-body">
+                            <h5 class="card-title">Moda Praia</h5>
+                            <p class="card-text">Tudo que você precisa para um dia perfeito na praia ou na piscina.</p>
+                            <a href="#" class="btn btn-primary">Ver Coleção</a>
                         </div>
                     </div>
                 </div>
@@ -133,26 +146,13 @@
 
     <footer class="footer py-3">
         <div class="container text-center">
-            <p>&copy; 2023 iCloset. Todos os direitos reservados.</p>
+            <span>&copy; 2023 iCloset. Todos os direitos reservados.</span>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-
-    <script>
-        window.onload = function () {
-            const userEmail = localStorage.getItem('userEmail');
-            if (userEmail) {
-                const userDiv = document.createElement('div');
-                userDiv.className = 'user-info';
-                userDiv.textContent = `Logado como: ${userEmail}`;
-                document.body.insertBefore(userDiv, document.body.firstChild);
-            }
-        };
-    </script>
-
 
 </body>
 
