@@ -70,6 +70,9 @@
 
     <script src="https://parsecdn.back4app.com/parse-latest.min.js"></script>
     <script>
+        Parse.initialize(TvzsrUPbRg7uwVBcYg3PlXrLwbLcycmqVGPVgJyB, BFNACc8G1NhYlqsHiwSuaxWJeLpWsw9OjMxviWh6); // Use suas chaves do Back4App
+        Parse.serverURL = 'https://parseapi.back4app.com/';
+
         document.addEventListener("DOMContentLoaded", function () {
             fetchProducts();
         });
@@ -123,12 +126,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-    <script>
-        // Initialize Parse
-        Parse.initialize(TvzsrUPbRg7uwVBcYg3PlXrLwbLcycmqVGPVgJyB, BFNACc8G1NhYlqsHiwSuaxWJeLpWsw9OjMxviWh6); //PASTE HERE YOUR Back4App APPLICATION ID AND YOUR JavaScript KEY
-        Parse.serverURL = "https://parseapi.back4app.com/";
-    </script>
-
 </body>
 
 </html>
