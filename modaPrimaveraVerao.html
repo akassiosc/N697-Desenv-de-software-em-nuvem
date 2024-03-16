@@ -15,27 +15,18 @@
         .footer { background-color: #ff69b4; color: white; text-align: center; padding: 10px 0; }
         .footer a { color: white; }
         .footer a:hover { color: #ffb6c1; }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-        .product-card {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            overflow: hidden;
-            background: #fff;
-        }
-        .product-image {
-            max-width: 100%;
+        .card-img-top {
+            width: 100%;
             height: auto;
-            display: block;
-            margin: auto;
+            object-fit: cover;
         }
-        .product-info {
+        .card-body {
             padding: 10px;
+            background-color: white;
             text-align: center;
+        }
+        .product-row {
+            padding: 10px 0;
         }
     </style>
 </head>
@@ -59,8 +50,8 @@
     </nav>
 
     <main class="container my-4">
-        <h2 class="text-center" style="color: #ff69b4;">Produtos - Moda Primavera/Verão</h2>
-        <div id="productsContainer" class="product-grid">
+        <h2 class="text-center" style="color: #ff69b4;">Moda Primavera/Verão</h2>
+        <div class="row row-cols-1 row-cols-md-2 g-4 product-row" id="productsContainer">
             <!-- Os produtos serão inseridos aqui -->
         </div>
     </main>
@@ -83,17 +74,20 @@
                 productsContainer.innerHTML = '';
 
                 results.forEach((produto) => {
-                    const productCard = document.createElement('div');
-                    productCard.classList.add('product-card');
-                    productCard.innerHTML = `
-                        <img src="${produto.get('fotoRoupa').url()}" class="product-image" alt="${produto.get('nome')}">
-                        <div class="product-info">
+                    const colDiv = document.createElement('div');
+                    colDiv.classList.add('col');
+                    const cardDiv = document.createElement('div');
+                    cardDiv.classList.add('card');
+                    cardDiv.innerHTML = `
+                        <img src="${produto.get('fotoRoupa').url()}" class="card-img-top" alt="${produto.get('nome')}">
+                        <div class="card-body">
                             <h5 class="card-title">${produto.get('nome')}</h5>
                             <p class="card-text">${produto.get('descricao')}</p>
                             <p class="card-text"><strong>Preço: R$ ${produto.get('preco').toFixed(2)}</strong></p>
                             <button class="btn btn-primary" onclick="alert('Produto adicionado ao carrinho!')">Comprar</button>
                         </div>`;
-                    productsContainer.appendChild(productCard);
+                    colDiv.appendChild(cardDiv);
+                    productsContainer.appendChild(colDiv);
                 });
             } catch (error) {
                 console.error('Erro ao buscar produtos:', error);
