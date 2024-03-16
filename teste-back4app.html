@@ -3,18 +3,32 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>CRUD com Parse - Usuários</title>
+    <title>CRUD Usuários - Parse</title>
     <script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 40px;
+            background-color: #fff0f5;
+            padding: 20px;
         }
 
-        input, button {
-            margin-top: 10px;
-            margin-bottom: 10px;
-            display: block;
+        h1 {
+            color: #ff69b4;
+        }
+
+        input,
+        button {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: calc(100% - 22px);
+        }
+
+        button {
+            color: #fff;
+            background-color: #ff69b4;
+            cursor: pointer;
         }
 
         .user-list {
@@ -22,7 +36,19 @@
         }
 
         .user-item {
+            background-color: #f8f8f8;
+            border: 1px solid #eee;
+            padding: 10px;
             margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .delete-btn {
+            background-color: #e74c3c;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            float: right;
         }
     </style>
 </head>
@@ -65,7 +91,7 @@
                 results.forEach(user => {
                     const userItem = document.createElement("div");
                     userItem.classList.add("user-item");
-                    userItem.innerHTML = `Username: ${user.get("username")}, Email: ${user.get("email")} <button onclick="deleteUser('${user.id}')">Deletar</button>`;
+                    userItem.innerHTML = `Username: ${user.get("username")}, Email: ${user.get("email")} <button class="delete-btn" onclick="deleteUser('${user.id}')">Deletar</button>`;
                     userList.appendChild(userItem);
                 });
             } catch (error) {
@@ -73,6 +99,7 @@
             }
         }
 
+        // Esta função pode não funcionar como esperado sem permissões adequadas.
         async function deleteUser(userId) {
             const query = new Parse.Query(Parse.User);
             try {
