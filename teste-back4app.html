@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>CRUD com Parse - Usuários</title>
+    <title>CRUD de Usuários - Parse SDK</title>
     <script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js"></script>
     <style>
         body {
@@ -31,31 +31,8 @@
             cursor: pointer;
         }
 
-        .user-list {
-            margin-top: 20px;
-        }
-
         .user-item {
-            background-color: #f8f8f8;
-            border: 1px solid #eee;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-        }
-
-        .delete-btn,
-        .update-btn {
-            background-color: #e74c3c;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            color: white;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        .update-btn {
-            background-color: #f1c40f;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -65,66 +42,45 @@
     <input id="username" type="text" placeholder="Username" />
     <input id="email" type="email" placeholder="Email" />
     <input id="password" type="password" placeholder="Password" />
-    <button id="createButton">Criar Usuário</button>
-    <div id="userList" class="user-list"></div>
+    <button onclick="createUser()">Criar Usuário</button>
+    <button onclick="listUsers()">Listar Usuários</button>
+    <div id="usersList"></div>
 
     <script>
-        Parse.initialize("JTvzsrUPbRg7uwVBcYg3PlXrLwbLcycmqVGPVgJyB", "BFNACc8G1NhYlqsHiwSuaxWJeLpWsw9OjMxviWh6");
+        Parse.initialize("JfMeozLs8UZFxaZibAiZhlpDl5OZkyjVwzdxLfqw", "fi6LWURzRGmTg7neZfI79MJaB2QHjWhiZ4nVFvKD");
         Parse.serverURL = "https://parseapi.back4app.com/";
 
-        async function createParseUser() {
-            let user = new Parse.User();
+        async function createUser() {
+            const user = new Parse.User();
             user.set("username", document.getElementById("username").value);
             user.set("email", document.getElementById("email").value);
             user.set("password", document.getElementById("password").value);
 
             try {
                 await user.signUp();
-                alert(`Usuário criado com sucesso: ${user.get("username")}`);
-                document.getElementById("username").value = "";
-                document.getElementById("email").value = "";
-                document.getElementById("password").value = "";
-                fetchUsers(); // Atualiza a lista de usuários
+                alert("Usuário criado com sucesso!");
+                listUsers(); // Atualiza a lista de usuários
             } catch (error) {
                 alert(`Erro: ${error.message}`);
             }
         }
 
-        async function fetchUsers() {
-            const User = Parse.Object.extend("User");
-            const query = new Parse.Query(User);
-            query.limit(1000); // Limita para 1000 usuários, ajuste conforme necessário
+        async function listUsers() {
+            const query = new Parse.Query(Parse.User);
             try {
                 const results = await query.find();
-                const userList = document.getElementById("userList");
-                userList.innerHTML = ""; // Limpa a lista antes de adicionar novos elementos
+                const usersList = document.getElementById("usersList");
+                usersList.innerHTML = ""; // Limpa a lista antes de adicionar novos elementos
                 results.forEach((user) => {
                     const userItem = document.createElement("div");
                     userItem.classList.add("user-item");
-                    userItem.innerHTML = `Username: ${user.get("username")}, Email: ${user.get("email")}
-                                          <button class="delete-btn" onclick="deleteUser('${user.id}')">Deletar</button>`;
-                    userList.appendChild(userItem);
+                    userItem.innerHTML = `Username: ${user.get("username")}, Email: ${user.get("email")}`;
+                    usersList.appendChild(userItem);
                 });
             } catch (error) {
-                alert(`Erro ao buscar usuários: ${error.message}`);
+                console.error("Erro ao listar usuários: ", error);
             }
         }
-
-        async function deleteUser(userId) {
-            const User = Parse.Object.extend("User");
-            const query = new Parse.Query(User);
-            try {
-                const user = await query.get(userId);
-                await user.destroy();
-                alert("Usuário deletado com sucesso.");
-                fetchUsers(); // Atualiza a lista após a exclusão
-            } catch (error) {
-                alert(`Erro ao deletar usuário: ${error.message}`);
-            }
-        }
-
-        document.getElementById("createButton").addEventListener("click", createParseUser);
-        fetchUsers(); // Carrega os usuários ao abrir a página
     </script>
 </body>
 
