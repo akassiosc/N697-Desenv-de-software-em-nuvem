@@ -22,22 +22,20 @@
             padding: 20px;
         }
         .product-card {
-            border: none;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             overflow: hidden;
-            position: relative;
-            text-align: center;
+            background: #fff;
         }
         .product-image {
             max-width: 100%;
             height: auto;
+            display: block;
+            margin: auto;
         }
         .product-info {
-            background: rgba(255, 255, 255, 0.8);
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
             padding: 10px;
+            text-align: center;
         }
     </style>
 </head>
@@ -46,6 +44,17 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html">iCloset</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                    <a class="nav-link" href="Usuário.html">Cadastro de Cliente</a>
+                    <a class="nav-link" href="adm.html">Administração</a>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -79,9 +88,9 @@
                     productCard.innerHTML = `
                         <img src="${produto.get('fotoRoupa').url()}" class="product-image" alt="${produto.get('nome')}">
                         <div class="product-info">
-                            <h5>${produto.get('nome')}</h5>
-                            <p>${produto.get('descricao')}</p>
-                            <p><strong>Preço: R$ ${produto.get('preco').toFixed(2)}</strong></p>
+                            <h5 class="card-title">${produto.get('nome')}</h5>
+                            <p class="card-text">${produto.get('descricao')}</p>
+                            <p class="card-text"><strong>Preço: R$ ${produto.get('preco').toFixed(2)}</strong></p>
                             <button class="btn btn-primary" onclick="alert('Produto adicionado ao carrinho!')">Comprar</button>
                         </div>`;
                     productsContainer.appendChild(productCard);
