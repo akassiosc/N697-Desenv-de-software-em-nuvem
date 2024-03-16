@@ -10,40 +10,59 @@
     <script type="text/javascript" src="https://npmcdn.com/parse/dist/parse.min.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
             background-color: #fff0f5;
-            padding: 20px;
         }
 
-        input, button {
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            width: 300px;
+        .navbar {
+            background-color: #ff69b4;
         }
 
-        button {
+        .navbar-dark .navbar-nav .nav-link {
+            color: white;
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #ffb6c1;
+        }
+
+        .main-heading {
+            color: #ff69b4;
+        }
+
+        .footer {
             background-color: #ff69b4;
             color: white;
-            cursor: pointer;
         }
 
-        .user-item {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #f0f0f0;
+        .footer a {
+            color: white;
         }
 
-        table {
+        .footer a:hover {
+            color: #ffb6c1;
+        }
+
+        .card-img-top {
             width: 100%;
+            object-fit: cover;
+            border-radius: 0.25rem 0.25rem 0 0;
         }
 
-        img {
-            height: 50px;
-            width: auto;
+        .price {
+            font-size: 1.2em;
+            color: #ff69b4;
+            font-weight: bold;
+        }
+
+        .user-info {
+            background-color: #ff69b4;
+            color: white;
+            padding: 10px;
+            text-align: right;
+            font-weight: bold;
         }
     </style>
+</head>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-pink">
