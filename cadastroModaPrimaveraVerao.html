@@ -16,7 +16,7 @@
         .footer a { color: white; }
         .footer a:hover { color: #ffb6c1; }
         .form-container { max-width: 500px; margin: auto; padding-top: 20px; }
-        img.product-image { width: 50px; height: auto; } /* Adjust image size */
+        img.product-image { width: 50px; height: auto; }
     </style>
 </head>
 <body>
@@ -30,9 +30,26 @@
     <main class="form-container">
         <h2 class="text-center" style="color: #ff69b4;">Cadastro de Produtos - Moda Primavera/Verão</h2>
         <form id="productForm">
-            <!-- Form fields here -->
+            <div class="mb-3">
+                <label for="nomeProduto" class="form-label">Nome do Produto</label>
+                <input type="text" class="form-control" id="nomeProduto" required>
+            </div>
+            <div class="mb-3">
+                <label for="descricaoProduto" class="form-label">Descrição</label>
+                <textarea class="form-control" id="descricaoProduto" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="precoProduto" class="form-label">Preço</label>
+                <input type="number" class="form-control" id="precoProduto" step="0.01" required>
+            </div>
+            <div class="mb-3">
+                <label for="imagemProduto" class="form-label">Imagem do Produto</label>
+                <input type="file" class="form-control" id="imagemProduto" accept="image/*">
+            </div>
+            <button type="submit" class="btn btn-primary">Cadastrar Produto</button>
         </form>
-        <!-- Table for listing products -->
+
+        <!-- Tabela para listar os produtos -->
         <table class="table mt-4">
             <thead>
                 <tr>
@@ -43,8 +60,8 @@
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
-            <tbody id="productList">
-                <!-- Product rows will be added here -->
+            <tbody id="productsTable">
+                <!-- Linhas da tabela serão inseridas aqui -->
             </tbody>
         </table>
     </main>
@@ -53,22 +70,89 @@
         <span>&copy; 2024 iCloset. Todos os direitos reservados.</span>
     </footer>
 
+    <script src="https://parsecdn.back4app.com/parse-latest.min.js"></script>
     <script>
         Parse.initialize("TvzsrUPbRg7uwVBcYg3PlXrLwbLcycmqVGPVgJyB", "BFNACc8G1NhYlqsHiwSuaxWJeLpWsw9OjMxviWh6");
         Parse.serverURL = 'https://parseapi.back4app.com/';
 
-        document.addEventListener('DOMContentLoaded', function () {
-            fetchProducts();
+        document.getElementById('productForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const nomeProduto = document.getElementById('nomeProduto').value;
+            const descricaoProduto = document.getElementById('descricaoProduto').value;
+            const precoProduto = parseFloat(document.getElementById('precoProduto').value);
+            const imagemProduto = document.getElementById('imagemProduto').files[0];
+
+            if (imagemProduto) {
+                const parseFile = new Parse.File(imagemProduto.name, imagemProduto);
+
+                try {
+                    await parseFile.save();
+                    const Produto = Parse.Object.extend('Produto');
+                    const produto = new Produto();
+
+                    produto.set('nome', nomeProduto);
+                    produto.set('descricao', descricaoProduto);
+                    produto.set('preco', precoProduto);
+                    produto.set('categoria', 'Moda Primavera/Verão');
+                    produto.set('fotoRoupa', parseFile);
+
+                    await produto.save();
+                    alert('Produto cadastrado com sucesso!');
+                    document.getElementById('productForm').reset();
+                    fetchProducts(); // Atualiza a lista de produtos após o cadastro
+                } catch (error) {
+                    alert('Falha ao cadastrar produto. Erro: ' + error.message);
+                }
+            } else {
+                alert('Por favor, selecione uma imagem para o produto.');
+            }
         });
 
-        // Function definitions for CRUD operations here
-        
         async function fetchProducts() {
-            // Implementation for fetching and displaying products
+            const Produto = Parse.Object.extend('Produto');
+            const query = new Parse.Query(Produto);
+            query.equalTo('categoria', 'Moda Primavera/Verão');
+            const results = await query.find();
+
+            const productsTable = document.getElementById('productsTable');
+            productsTable.innerHTML = ''; // Limpa a tabela antes de adicionar novos produtos
+
+            results.forEach(produto => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${produto.get('nome')}</td>
+                    <td>${produto.get('descricao')}</td>
+                    <td>R$ ${produto.get('preco').toFixed(2)}</td>
+                    <td><img src="${produto.get('fotoRoupa').url()}" class="product-image"></td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="deleteProduct('${produto.id}')">Deletar</button>
+                        <button class="btn btn-secondary btn-sm" onclick="editProduct('${produto.id}')">Editar</button>
+                    </td>
+                `;
+                productsTable.appendChild(tr);
+            });
         }
 
-        // Include functions for deleting and editing products here
-        
+        async function deleteProduct(id) {
+            const Produto = Parse.Object.extend('Produto');
+            const query = new Parse.Query(Produto);
+            try {
+                const produto = await query.get(id);
+                await produto.destroy();
+                alert('Produto deletado com sucesso.');
+                fetchProducts(); // Atualiza a lista de produtos após a exclusão
+            } catch (error) {
+                alert('Falha ao deletar produto. Erro: ' + error.message);
+            }
+        }
+
+        async function editProduct(id) {
+            // Função para editar produto (a implementar)
+            alert('Função de edição a ser implementada.');
+        }
+
+        fetchProducts(); // Carrega os produtos ao abrir a página
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
