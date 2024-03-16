@@ -20,7 +20,14 @@
             max-height: 200px; /* Ajuste o tamanho conforme necessário */
             width: auto;
             display: block;
-            margin: auto; /* Centraliza a imagem */
+            margin: 10px auto; /* Centraliza a imagem com uma pequena margem */
+        }
+        .card-body {
+            text-align: center; /* Centraliza o texto e botão no corpo do card */
+        }
+        .card { 
+            margin: 0 auto; /* Centraliza o card */
+            max-width: 300px; /* Ajuste para a largura desejada */
         }
     </style>
 </head>
@@ -45,7 +52,7 @@
 
     <main class="container my-4">
         <h2 class="text-center" style="color: #ff69b4;">Produtos - Moda Primavera/Verão</h2>
-        <div id="productsContainer">
+        <div id="productsContainer" class="d-flex flex-wrap justify-content-center">
             <!-- Os produtos serão inseridos aqui -->
         </div>
     </main>
@@ -75,7 +82,7 @@
                         <div class="card-body">
                             <h5 class="card-title">${produto.get('nome')}</h5>
                             <p class="card-text">${produto.get('descricao')}</p>
-                            <p class="card-text">Preço: R$ ${produto.get('preco').toFixed(2)}</p>
+                            <p class="card-text"><strong>Preço: R$ ${produto.get('preco').toFixed(2)}</strong></p>
                             <button class="btn btn-primary" onclick="alert('Produto adicionado ao carrinho!')">Comprar</button>
                         </div>`;
                     productsContainer.appendChild(produtoDiv);
