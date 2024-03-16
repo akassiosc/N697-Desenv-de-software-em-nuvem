@@ -15,6 +15,13 @@
         .footer { background-color: #ff69b4; color: white; text-align: center; padding: 10px 0; }
         .footer a { color: white; }
         .footer a:hover { color: #ffb6c1; }
+        /* Ajustes para a imagem do produto */
+        .product-img {
+            max-height: 200px; /* Ajuste o tamanho conforme necessário */
+            width: auto;
+            display: block;
+            margin: auto; /* Centraliza a imagem */
+        }
     </style>
 </head>
 <body>
@@ -53,7 +60,7 @@
                     const produtoDiv = document.createElement('div');
                     produtoDiv.classList.add('card', 'mb-3');
                     produtoDiv.innerHTML = `
-                        <img src="${produto.get('fotoRoupa').url()}" class="card-img-top" alt="${produto.get('nome')}">
+                        <img src="${produto.get('fotoRoupa').url()}" class="card-img-top product-img" alt="${produto.get('nome')}">
                         <div class="card-body">
                             <h5 class="card-title">${produto.get('nome')}</h5>
                             <p class="card-text">${produto.get('descricao')}</p>
