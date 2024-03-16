@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <title>CRUD com Parse - Usuários</title>
@@ -10,24 +11,30 @@
             background-color: #fff0f5;
             padding: 20px;
         }
+
         h1 {
             color: #ff69b4;
         }
-        input, button {
+
+        input,
+        button {
             padding: 10px;
             margin: 10px 0;
             border-radius: 5px;
             border: 1px solid #ddd;
             width: calc(100% - 22px);
         }
+
         button {
             color: #fff;
             background-color: #ff69b4;
             cursor: pointer;
         }
+
         .user-list {
             margin-top: 20px;
         }
+
         .user-item {
             background-color: #f8f8f8;
             border: 1px solid #eee;
@@ -35,7 +42,9 @@
             margin-bottom: 10px;
             border-radius: 5px;
         }
-        .delete-btn, .update-btn {
+
+        .delete-btn,
+        .update-btn {
             background-color: #e74c3c;
             border: none;
             padding: 5px 10px;
@@ -44,11 +53,13 @@
             cursor: pointer;
             margin-left: 10px;
         }
+
         .update-btn {
             background-color: #f1c40f;
         }
     </style>
 </head>
+
 <body>
     <h1>Parse SDK - CRUD de Usuários</h1>
     <input id="username" type="text" placeholder="Username" />
@@ -58,7 +69,7 @@
     <div id="userList" class="user-list"></div>
 
     <script>
-        Parse.initialize("JfMeozLs8UZFxaZibAiZhlpDl5OZkyjVwzdxLfqw", "fi6LWURzRGmTg7neZfI79MJaB2QHjWhiZ4nVFvKD");
+        Parse.initialize("JTvzsrUPbRg7uwVBcYg3PlXrLwbLcycmqVGPVgJyB", "BFNACc8G1NhYlqsHiwSuaxWJeLpWsw9OjMxviWh6");
         Parse.serverURL = "https://parseapi.back4app.com/";
 
         async function createParseUser() {
@@ -116,4 +127,5 @@
         fetchUsers(); // Carrega os usuários ao abrir a página
     </script>
 </body>
+
 </html>
