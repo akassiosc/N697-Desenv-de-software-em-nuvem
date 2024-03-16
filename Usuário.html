@@ -34,6 +34,15 @@
             padding: 10px;
             background-color: #f0f0f0;
         }
+
+        table {
+            width: 100%;
+        }
+
+        img {
+            height: 50px;
+            width: auto;
+        }
     </style>
 </head>
 
@@ -44,87 +53,79 @@
     <input id="password" type="password" placeholder="Password" />
     <button onclick="createUser()">Criar Usuário</button>
     <button onclick="listUsers()">Listar Usuários</button>
-    <!-- Botões para operações no usuário logado -->
-    <button onclick="updateUser()">Atualizar Email do Usuário Logado</button>
-    <button onclick="deleteUser()">Deletar Usuário Logado</button>
-    <div id="usersList"></div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="usersList"></tbody>
+    </table>
 
     <script>
         // Substitua estas chaves pelas chaves reais do seu app no Parse.
-        Parse.initialize("YOTvzsrUPbRg7uwVBcYg3PlXrLwbLcycmqVGPVgJyB", "BFNACc8G1NhYlqsHiwSuaxWJeLpWsw9OjMxviWh6");
+        Parse.initialize("TvzsrUPbRg7uwVBcYg3PlXrLwbLcycmqVGPVgJyB", "BFNACc8G1NhYlqsHiwSuaxWJeLpWsw9OjMxviWh6");
         Parse.serverURL = "https://parseapi.back4app.com/";
 
         async function createUser() {
-            // Cria um novo objeto User.
             const user = new Parse.User();
-            // Define os atributos do usuário.
             user.set("username", document.getElementById("username").value);
             user.set("email", document.getElementById("email").value);
             user.set("password", document.getElementById("password").value);
 
             try {
-                // Tenta salvar (criar) o usuário no Parse.
                 await user.signUp();
                 alert("Usuário criado com sucesso!");
+                listUsers(); // Atualiza a lista após a criação
             } catch (error) {
                 alert(`Erro ao criar usuário: ${error.message}`);
             }
         }
 
         async function listUsers() {
-            // Cria uma consulta na classe User.
             const query = new Parse.Query(Parse.User);
             try {
-                // Executa a consulta para buscar todos os usuários.
                 const results = await query.find();
-                // Seleciona o elemento HTML onde os usuários serão listados.
                 const usersList = document.getElementById("usersList");
-                usersList.innerHTML = ""; // Limpa a lista.
-                // Itera sobre os resultados e os adiciona à lista.
+                usersList.innerHTML = "";
                 results.forEach((user) => {
-                    const userItem = document.createElement("div");
-                    userItem.classList.add("user-item");
-                    userItem.innerText = `Username: ${user.get("username")}, Email: ${user.get("email")}`;
-                    usersList.appendChild(userItem);
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${user.get("username")}</td>
+                        <td>${user.get("email")}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" onclick="deleteUser('${user.id}')">Deletar</button>
+                            <button class="btn btn-primary btn-sm" onclick="editUser('${user.id}')">Editar</button>
+                        </td>`;
+                    usersList.appendChild(tr);
                 });
             } catch (error) {
                 alert(`Erro ao listar usuários: ${error.message}`);
             }
         }
 
-        async function updateUser() {
-            // Obtém o usuário atualmente logado.
-            const currentUser = Parse.User.current();
-            if (currentUser) {
-                // Define um novo email para o usuário. Aqui você poderia pedir o novo email através de um prompt ou input.
-                currentUser.set('email', 'newemail@example.com');
-                try {
-                    // Salva as mudanças no usuário.
-                    await currentUser.save();
-                    alert('Email atualizado com sucesso.');
-                } catch (error) {
-                    alert(`Erro ao atualizar usuário: ${error.message}`);
-                }
-            } else {
-                alert("Nenhum usuário logado.");
+        async function deleteUser(userId) {
+            const query = new Parse.Query(Parse.User);
+            try {
+                const user = await query.get(userId);
+                await user.destroy();
+                alert('Usuário deletado com sucesso.');
+                listUsers(); // Atualiza a lista após a deleção
+            } catch (error) {
+                alert(`Erro ao deletar usuário: ${error.message}`);
             }
         }
 
-        async function deleteUser() {
-            // Obtém o usuário atualmente logado.
-            const currentUser = Parse.User.current();
-            if (currentUser) {
-                try {
-                    // Deleta o usuário.
-                    await currentUser.destroy();
-                    alert('Usuário deletado com sucesso.');
-                } catch (error) {
-                    alert(`Erro ao deletar usuário: ${error.message}`);
-                }
-            } else {
-                alert("Nenhum usuário logado.");
-            }
+        // Função editUser não está implementada neste exemplo.
+        // Você precisaria adicionar lógica para buscar o usuário por ID, atualizar seus dados e salvar.
+        async function editUser(userId) {
+            alert("Editar usuário não implementado neste exemplo.");
         }
+
+        listUsers(); // Lista usuários ao carregar a página
     </script>
 </body>
 
